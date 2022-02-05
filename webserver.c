@@ -38,9 +38,11 @@ u16_t adc_ssi_handler(int iIndex, char *buf, int buflen, u16_t current_tag_numbe
    for (int i=0; i<buflen; i++) {
        buf[i] = counter++;   // perhaps i + iIndex ?
    }
-   if ( current_tag_number < 100  ) {
+//   if ( current_tag_number < 100  ) {
+//   should go forever, but it stops at 12'582'721 bytes
+//   which are transferred at 136 kB / s (a bit slower than needed for full ADC speed)
        *next_tag_number = current_tag_number + 1;
-   }
+//   }
    return buflen;
 }
 
