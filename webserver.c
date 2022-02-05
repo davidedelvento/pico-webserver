@@ -31,12 +31,15 @@ static const tCGI cgi_handlers[] = {
   }
 };
 
-u16_t adc_ssi_handler(int iIndex, char *buf, int buflen)
+u16_t adc_ssi_handler(int iIndex, char *buf, int buflen, u16_t current_tag_number, u16_t *next_tag_number)
 {
    static char counter=0;
    // ...put up to buflen bytes in buf and return number of bytes put there
    for (int i=0; i<buflen; i++) {
        buf[i] = counter++;   // perhaps i + iIndex ?
+   }
+   if ( current_tag_number < 100  ) {
+       *next_tag_number = current_tag_number + 1;
    }
    return buflen;
 }
