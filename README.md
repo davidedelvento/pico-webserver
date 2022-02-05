@@ -2,6 +2,15 @@
 
 Experimenting serving dynamic content as described at https://github.com/maxnet/pico-webserver/issues/3
 
+In fact it works well. Not as much as I'd like, but well.
+I would like to send files of arbitrary size, but it stops at 12'582'721 bytes, which
+is one less than 65536 (16 bit counter) the size of the individual packet (192 bytes).
+
+One could work around that, but I am not doing it, because... The transfer rates
+are at most `136 kB / s` and often around `90-100 kB / s` which is a bit too slow for what
+I need. Instead, for my purpose I am experimenting with https://github.com/davidedelvento/no-OS-FatFS-SD-SPI-RPi-Pico
+
+
 # pico-webserver
 
 Webserver example that came with TinyUSB slightly modified to run on a Raspberry Pi Pico.
