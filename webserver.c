@@ -11,13 +11,13 @@
 static const char *cgi_toggle_led(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
 {
     gpio_put(LED_PIN, !gpio_get(LED_PIN));
-    return "/index.html";
+    return "/index.shtml";
 }
 
 static const char *cgi_reset_usb_boot(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
 {
     reset_usb_boot(0, 0);
-    return "/index.html";
+    return "/index.shtml";
 }
 
 static const tCGI cgi_handlers[] = {
@@ -31,6 +31,20 @@ static const tCGI cgi_handlers[] = {
   }
 };
 
+u16_t adc_ssi_handler(int iIndex, char *buf, int buflen)
+{
+   static char counter=0;
+   // ...put up to buflen bytes in buf and return number of bytes put there
+   for (int i=0; i<buflen; i++) {
+       buf[i] = counter++;   // perhaps i + iIndex ?
+   }
+   return buflen;
+}
+
+const char * ssi_tags[] = {
+	   "adc"
+};
+
 
 int main()
 {
@@ -40,6 +54,7 @@ int main()
     dhcpd_init();
     httpd_init();
     http_set_cgi_handlers(cgi_handlers, LWIP_ARRAYSIZE(cgi_handlers));
+    http_set_ssi_handler(adc_ssi_handler, ssi_tags, LWIP_ARRAYSIZE(ssi_tags));
     
     // For toggle_led
     gpio_init(LED_PIN);
