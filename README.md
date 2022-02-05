@@ -1,3 +1,7 @@
+# purpose of this fork
+
+Experimenting serving dynamic content as described at https://github.com/maxnet/pico-webserver/issues/3
+
 # pico-webserver
 
 Webserver example that came with TinyUSB slightly modified to run on a Raspberry Pi Pico.
